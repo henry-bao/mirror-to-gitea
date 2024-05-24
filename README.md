@@ -53,7 +53,7 @@ services:
             context: .
             dockerfile: Dockerfile
         restart: unless-stopped
-        env_files:
+        env_file:
             - .env
         container_name: mirror-to-gitea
 ```
