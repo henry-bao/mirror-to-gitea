@@ -2,3 +2,5 @@
 node_modules/
 .secrets.rc
 .vscode/
+.env
+.DS_Store

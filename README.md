@@ -37,10 +37,8 @@ docker build -t mirror-to-gitea .
 docker run \
  -d \
  mirror-to-gitea \
- --restart always \
- -e GITHUB_USERNAME=github-user \
- -e GITEA_URL=https://your-gitea.url \
- -e GITEA_TOKEN=please-exchange-with-token
+ --restart unless=stopped \
+ --env-file .env
 ```
 
 This will a spin up a docker container which will run forever, mirroring all your repositories once every hour to your gitea server.
@@ -55,14 +53,8 @@ services:
             context: .
             dockerfile: Dockerfile
         restart: unless-stopped
-        environment:
-            - GITHUB_USERNAME=github-user
-            - GITEA_URL=https://your-gitea.url
-            - GITEA_TOKEN=please-exchange-with-token
-            # - GITHUB_TOKEN=please-exchange-with-token # Optional, set to mirror private repos
-            # - MIRROR_PRIVATE_REPOSITORIES=true # Optional, set to mirror private repos
-            # - DELAY=3600 # Optional, set to change the delay between checks (in seconds)
-            # - GITEA_ORG_NAME # Optional, set to mirror to an organization instead of a user
+        env_files:
+            - .env
         container_name: mirror-to-gitea
 ```
 
